@@ -56,4 +56,4 @@ Na pasta `docs/`, você encontrará:
 * O arquivo do relatório do Power BI (`Dashboard CVM.pbix`).
 
 ---
-Feito com 💻 por **Gabriel Sodré**.
+Feito com 💻 por **Gabriel Mota**.
