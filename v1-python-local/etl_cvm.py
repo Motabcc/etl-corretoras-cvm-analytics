@@ -8,7 +8,7 @@ response = requests.get(url_cvm)
 
 if response.status_code == 200:
 
-    db_url = "postgresql+psycopg2://postgres.jmacxymmuejokmfszohu:vtcKufktyPCTEZCw@aws-0-us-west-2.pooler.supabase.com:6543/postgres"
+    db_url = "postgresql+psycopg2://postgres.jmacxymmuejokmfszohu:SENHA@aws-0-us-west-2.pooler.supabase.com:PORTA/postgres"
     engine = create_engine(db_url)
     
     dados_cvm = response.json()

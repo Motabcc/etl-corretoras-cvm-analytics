@@ -1,0 +1,145 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "245c16a5-b2e7-4d39-b5ba-79122fc235d4",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://brasilapi.com.br/api/cvm/corretoras/v1",
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        240,
+        0
+      ],
+      "id": "40cc9cb7-148f-4099-800b-8f4a19026970",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1289b09c-4d5a-4048-9a9d-5a2f91357fe5",
+              "name": "ano_registro",
+              "value": "={{ DateTime.fromISO($json.data_registro).toFormat('yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "8e723d1e-a929-45ec-ab4b-6bf803f47b65",
+              "name": "mes_registro",
+              "value": "={{ DateTime.fromISO($json.data_registro).toFormat('MM') }}",
+              "type": "string"
+            },
+            {
+              "id": "5f145a40-5219-45aa-8553-53ce96f56dbe",
+              "name": "valor_patrimonio_liquido",
+              "value": "={{ Number(String($json.valor_patrimonio_liquido).replace(',', '.')) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        464,
+        0
+      ],
+      "id": "618b63cb-90c0-440e-9294-6beedfb407a5",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "corretoras_cvm",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "cnpj",
+              "condition": "eq",
+              "keyValue": "={{ $json.cnpj }}"
+            }
+          ]
+        },
+        "dataToSend": "autoMapInputData"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        688,
+        0
+      ],
+      "id": "5da85d02-d12a-4a02-87d6-678df963a6bb",
+      "name": "Update a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "tsAgavw7Xi8T9Noa",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ef616c1f82d544884db3fc3fe879e2d44fdb6658916c63f9306b131e9c862dfb"
+  }
+}
