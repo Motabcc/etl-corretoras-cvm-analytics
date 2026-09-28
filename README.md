@@ -1,25 +1,24 @@
-# 📊 Dashboard Corretoras CVM - ETL com Python no Power BI
+# 🚀 Pipeline de Dados CVM: De Script Local à Automação Cloud (ETL + n8n + Supabase + Power BI)
 
-Este projeto é um pipeline de ponta a ponta (End-to-End) que extrai dados públicos da CVM (Comissão de Valores Mobiliários), realiza a limpeza e transformação dos dados utilizando **Python**, e disponibiliza as métricas financeiras de forma automatizada no **Power BI**.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.14-blue?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/n8n-Automation-orange?style=for-the-badge&logo=n8n&logoColor=white" />
+  <img src="https://img.shields.io/badge/Supabase-Database-green?style=for-the-badge&logo=supabase&logoColor=white" />
+  <img src="https://img.shields.io/badge/Power_BI-Analytics-yellow?style=for-the-badge&logo=powerbi&logoColor=white" />
+</p>
 
-O grande diferencial deste projeto é a sua arquitetura de **Automação Nível 1**: o script de extração e tratamento roda nativamente dentro do motor do Power BI. Não há arquivos estáticos (como CSVs ou planilhas) intermediários. Ao clicar em "Atualizar" no painel, os dados mais recentes são puxados diretamente da API.
+---
 
-## 🛠️ Tecnologias Utilizadas
-* **Fonte de Dados:** [Brasil API](https://brasilapi.com.br/) (Endpoint CVM)
-* **Linguagem:** Python (Bibliotecas: `requests`, `pandas`)
-* **Visualização e Orquestração:** Microsoft Power BI (Power Query Python Integration)
+## 🎯 Sobre o Projeto
+Este repositório documenta a evolução prática de um projeto de **Engenharia e Integração de Dados**, estruturado em formato de **Monorepo**. O objetivo principal é consumir dados públicos de corretoras da **CVM (Comissão de Valores Mobiliários)** via API, tratá-los, persisti-los em um banco relacional em nuvem de forma automatizada e exibi-los em um dashboard analítico.
 
-## 🏗️ Arquitetura e Modelagem
-1. **Extração:** Conexão com o endpoint `https://brasilapi.com.br/api/cvm/corretoras/v1`.
-2. **Transformação (Pandas):** 
-   * Conversão de colunas de texto para formato `datetime` seguro, lidando com valores nulos.
-   * Derivação de colunas temporais (`ano_registro`, `mes_registro`) para habilitar o uso de Inteligência de Tempo (DAX) no Power BI.
-   * Tipagem de dados financeiros (`valor_patrimonio_liquido`) para formato decimal.
-3. **Carga:** Ingestão do DataFrame `df_cvm` diretamente na memória do Power BI via script.
+---
 
-## 🚀 Como Executar o Projeto
+## 📈 Evolução da Arquitetura (Monorepo)
+O projeto foi desenvolvido em fases para demonstrar a transição de um ambiente local e manual para uma arquitetura moderna orientada a microsserviços e automação:
 
-### Pré-requisitos
-Certifique-se de ter o Python instalado na sua máquina e as bibliotecas necessárias:
-```bash
-pip install pandas requests
+```text
+PROJETO-PIX/
+├── docs/                     # Evidências, prints do fluxo e dashboard (.pbix)
+├── v1-python-local/          # Fase 1: Script em Python e extração para CSV local
+└── v2-automacao-n8n/         # Fase 2: Orquestração em nuvem com n8n e Supabase
