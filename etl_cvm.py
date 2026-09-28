@@ -20,7 +20,7 @@ if response.status_code == 200:
     #pra ver o header: print(df_cvm.columns.tolist())
     
     # converter o patrimônio líquido para número decimal
-    df_cvm['valor_patrimonio_liquido'] = pd.to_numeric(df_cvm['valor_patrimonio_liquido'], errors='coerce')
+    df_cvm['valor_patrimonio_liquido'] = pd.to_numeric(df_cvm['valor_patrimonio_liquido'], errors='coerce').fillna(0)
 
     #  amostra das colunas mais importantes
     print(df_cvm[['nome_social', 'ano_registro', 'valor_patrimonio_liquido']].head())
